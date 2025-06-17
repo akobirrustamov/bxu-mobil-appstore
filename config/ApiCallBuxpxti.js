@@ -8,9 +8,7 @@ export const BASE_URL_BUXPXTI = "https://student.buxpxti.uz/rest";
 const getMyCommands = async () => {
     try {
         const response = await ApiCall("/api/v1/app/admin/hemis/token/last", "GET");
-        console.log(response)
         if (response.status === 200 && response?.data) {
-            console.log(response)
             return response.data.name;
         } else {
             Alert.alert("Error", "Failed to fetch commands.");

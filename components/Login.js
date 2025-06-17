@@ -44,8 +44,9 @@ const Login = ({ navigation }) => {
             }
 
             const obj = { login: email, password };
-            const response = await ApiCall(`/api/v1/app${selectedRollPath}/login`, "POST", obj);
 
+            const response = await ApiCall(`/api/v1/app${selectedRollPath}/login`, "POST", obj);
+            console.log(response)
             if (response.status === 200 && response.data) {
                 const { token, role } = response.data;
 

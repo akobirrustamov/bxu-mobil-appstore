@@ -58,7 +58,7 @@ const HomeScreen = ({ navigation }) => {
     };
 
     const cards = [
-        { id: 1, title: "Taklif va shikoyatlarr", icon: "envelope", screen: "Taklif" },
+        { id: 1, title: "Taklif va shikoyatlar", icon: "envelope", screen: "Taklif" },
     ];
 
     return (
@@ -75,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
                     resizeMode="contain"
                 />
                 <Text style={styles.footerText}>
-                    Buxoro psixologiya va xorijiy tillar instituti
+                    Buxoro Xalqaro Universiteti
                 </Text>
             </ImageBackground>
             <ImageBackground
