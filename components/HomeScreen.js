@@ -83,6 +83,8 @@ const HomeScreen = ({ navigation }) => {
                 style={styles.myBg}
                 resizeMode="repeat"
             >
+                {role === "ROLE_STAFF" && (
+
                 <ScrollView style={styles.cardsContainer}>
                     {role === "ROLE_STAFF" && (
                         <TouchableOpacity
@@ -197,6 +199,90 @@ const HomeScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     ))}
                 </ScrollView>
+
+                )}
+
+                {role === "ROLE_STUDENT" && (
+
+                    <ScrollView style={styles.cardsContainer}>
+                        {role === "ROLE_STAFF" && (
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate("Topshiriq")} // Navigate to specific screen
+                            >
+                                <ImageBackground
+                                    source={require("../assets/bg21.jpg")} // Background image for each card
+                                    style={styles.card}
+                                    imageStyle={styles.cardBackgroundImage}
+                                >
+                                    <FontAwesome
+                                        name={"calendar"}
+                                        size={40}
+                                        color={"rgba(0,0,30,0.59)"}
+                                    />
+                                    <Text style={styles.cardText}>Topshiriqlar</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        )}
+
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate("Student")} // Navigate to specific screen
+                            >
+                                <ImageBackground
+                                    source={require("../assets/bg21.jpg")} // Background image for each card
+                                    style={styles.card}
+                                    imageStyle={styles.cardBackgroundImage}
+                                >
+                                    <FontAwesome
+                                        name={"graduation-cap"}
+                                        size={40}
+                                        color={"rgba(0,0,30,0.59)"}
+                                    />
+                                    <Text style={styles.cardText}>Hujjatlar</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
+
+
+
+
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate("Jadval")} // Navigate to specific screen
+                            >
+                                <ImageBackground
+                                    source={require("../assets/bg21.jpg")} // Background image for each card
+                                    style={styles.card}
+                                    imageStyle={styles.cardBackgroundImage}
+                                >
+                                    <FontAwesome
+                                        name={"graduation-cap"}
+                                        size={40}
+                                        color={"rgba(0,0,30,0.59)"}
+                                    />
+                                    <Text style={styles.cardText}>Dars Jadval</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
+
+                        {cards.map((card) => (
+                            <TouchableOpacity
+                                key={card.id}
+                                onPress={() => navigation.navigate(card.screen)} // Navigate to specific screen
+                            >
+                                <ImageBackground
+                                    source={require("../assets/bg21.jpg")} // Background image for each card
+                                    style={styles.card}
+                                    imageStyle={styles.cardBackgroundImage}
+                                >
+                                    <FontAwesome
+                                        name={card.icon}
+                                        size={40}
+                                        color={"rgba(0,0,30,0.59)"}
+                                    />
+                                    <Text style={styles.cardText}>{card.title}</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+
+                )}
             </ImageBackground>
         </View>
     );

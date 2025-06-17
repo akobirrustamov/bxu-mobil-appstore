@@ -51,8 +51,8 @@ const Login = ({ navigation }) => {
 
                 await AsyncStorage.setItem("token", token);
                 await AsyncStorage.setItem("role", role);
-
                 navigation.replace(role === "ROLE_STAFF" ? "StaffProfile" : "Profile");
+
                 Alert.alert("Success", "Login muvaffaqiyatli!");
             } else {
                 Alert.alert("Xatolik", response?.message || "Login yoki parol noto'g'ri.");
