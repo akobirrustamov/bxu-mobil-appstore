@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
@@ -9,8 +9,9 @@ import {
   Text,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+
+// Screens
 import NotificationHistory from "./components/notifications/NotificationHistory";
-// Import all screens
 import HomeScreen from "./components/HomeScreen";
 import DetailScreen from "./components/DetailScreen";
 import Rektorat from "./components/Rektorat";
@@ -48,12 +49,32 @@ import WeaklyGroup from "./components/dars_jadvali/WeaklyGroup";
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    // Fake data, replace with your API logic
+    const fetchNotifications = async () => {
+      const notifications = [
+        { id: 1, read: false },
+        { id: 2, read: true },
+        { id: 3, read: false },
+        { id: 4, read: true },
+        { id: 5, read: false },
+        { id: 6, read: false },
+        { id: 7, read: true },
+        { id: 8, read: false },
+        { id: 9, read: false },
+        { id: 10, read: true },
+      ];
+      const unread = notifications.filter((n) => !n.read).length;
+      setUnreadCount(unread);
+    };
+
+    fetchNotifications();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* Push notification ro'yxatga olish */}
-
-
-      {/* Navigation */}
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Home"
@@ -76,17 +97,21 @@ export default function App() {
                 </TouchableOpacity>
               ),
               headerRight: () => (
-               <TouchableOpacity
-                 style={styles.iconContainer}
-                 onPress={() => navigation.navigate("NotificationHistory")}
-               >
-                 <FontAwesome name="bell" size={24} color="#000" />
-               </TouchableOpacity>
-
+                <TouchableOpacity
+                  style={styles.iconContainer}
+                  onPress={() => navigation.navigate("NotificationHistory")}
+                >
+                  <FontAwesome name="bell" size={24} color="#000" />
+                  {unreadCount > 0 && (
+                    <View style={styles.badge}>
+                      <Text style={styles.badgeText}>{unreadCount}</Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
               ),
             })}
           />
-          {/* Barcha boshqa ekranlar */}
+          <Stack.Screen name="NotificationHistory" component={NotificationHistory} />
           <Stack.Screen name="Detail" component={DetailScreen} />
           <Stack.Screen name="Nomenklatura" component={Rektorat} />
           <Stack.Screen name="TestInputs" component={TestInputs} />
@@ -119,7 +144,6 @@ export default function App() {
           <Stack.Screen name="GuruhJadval" component={GroupDarsJadval} />
           <Stack.Screen name="Jadval" component={DarsJadvalModal} />
           <Stack.Screen name="HaftalikJadval" component={WeaklyGroup} />
-          <Stack.Screen name="NotificationHistory" component={NotificationHistory} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
@@ -135,5 +159,22 @@ const styles = StyleSheet.create({
     height: 48,
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
+  },
+  badge: {
+    position: "absolute",
+    top: 4,
+    right: 4,
+    backgroundColor: "red",
+    borderRadius: 10,
+    width: 18,
+    height: 18,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  badgeText: {
+    color: "#fff",
+    fontSize: 10,
+    fontWeight: "bold",
   },
 });
