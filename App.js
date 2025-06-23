@@ -45,7 +45,7 @@ import DarsJadvali from "./components/dars_jadvali/DarsJadvali";
 import DarsJadvalModal from "./components/dars_jadvali/DarsJadvalModal";
 import GroupDarsJadval from "./components/dars_jadvali/GroupDarsJadval";
 import WeaklyGroup from "./components/dars_jadvali/WeaklyGroup";
-
+import PushNotificationRegister from "./components/PushNotificationRegister"
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -178,3 +178,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default App;
