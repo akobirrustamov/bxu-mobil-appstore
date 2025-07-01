@@ -1,10 +1,9 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export let BASE_URL
-BASE_URL = "http://172.20.172.63:8080";
-//BASE_URL = "https://bxu.uz";
-// BASE_URL = "https://buxpxti.uz";
-// BArSE_URL = "http://83.147.246.81:8090";
+// BASE_URL = "http://localhost:8080";
+BASE_URL = "https://buxpxti.uz";
+// BArSE_URL =i "http://83.147.246.81:8090";
 const ApiCall = async (endpoint, method = "GET", data = null, additionalHeaders = {}) => {
     try {
         const token = await AsyncStorage.getItem("token");

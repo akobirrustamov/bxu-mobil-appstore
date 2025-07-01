@@ -159,13 +159,15 @@ const Student = ({ navigation }) => {
     };
     const handleGetPayment = async () => {
         setLoading({...loading, payment: true});
+        console.log(profileData?.passport_pin)
         try {
-            const api_url = `https://qabul.buxpxti.uz/api/?jshir=${profileData?.passport_pin}&passport=${profileData.passport_number}`;
+            const api_url = `https://old-qabul.buxpxti.uz/api/?jshir=${profileData?.passport_pin}&passport=${profileData.passport_number}`;
             const headers = {
                 Authorization: 'Bearer 6d8f01f8c8f1e8f385415ee0894055f2',
             };
 
-            const response = await ApiCall(api_url, "GET", null, headers);
+            const response = await axios.get(api_url, {headers});
+            console.log(response)
             if (response.status === 200 && response.data) {
                 setPaymentData(response.data);
                 setModalVisible({...modalVisible, payment: true});
@@ -187,6 +189,7 @@ const Student = ({ navigation }) => {
             const response = await ApiCall('/api/v1/app/student/debt/'+token, "GET");
             if (response.status === 200 && response.data) {
                 setDebtData(response.data);
+                console.log(response.data)
                 setModalVisible({...modalVisible, debt: true});
             } else {
                 Alert.alert("Xatolik", "Qarzdorlik ma'lumotlari topilmadi");
@@ -271,7 +274,7 @@ const Student = ({ navigation }) => {
                                 ) : (
                                     <>
                                         <MaterialIcons name="description" size={24} color="#fff" />
-                                        <Text style={styles.serviceText}>Ma'lumotnoma1</Text>
+                                        <Text style={styles.serviceText}>Ma'lumotnoma</Text>
                                     </>
                                 )}
                             </TouchableOpacity>
@@ -328,20 +331,20 @@ const Student = ({ navigation }) => {
 
 
                             {/* Arizalar */}
-                            <TouchableOpacity
-                                style={styles.service}
-                                onPress={handleApplication}
-                                disabled={loading.application}
-                            >
-                                {loading.application ? (
-                                    <ActivityIndicator color="#fff" />
-                                ) : (
-                                    <>
-                                        <MaterialIcons name="assignment" size={24} color="#fff" />
-                                        <Text style={styles.serviceText}>Arizalar</Text>
-                                    </>
-                                )}
-                            </TouchableOpacity>
+                            {/*<TouchableOpacity*/}
+                            {/*    style={styles.service}*/}
+                            {/*    onPress={handleApplication}*/}
+                            {/*    disabled={loading.application}*/}
+                            {/*>*/}
+                            {/*    {loading.application ? (*/}
+                            {/*        <ActivityIndicator color="#fff" />*/}
+                            {/*    ) : (*/}
+                            {/*        <>*/}
+                            {/*            <MaterialIcons name="assignment" size={24} color="#fff" />*/}
+                            {/*            <Text style={styles.serviceText}>Arizalar</Text>*/}
+                            {/*        </>*/}
+                            {/*    )}*/}
+                            {/*</TouchableOpacity>*/}
                         </View>
                     </ScrollView>
                 ) : (

@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     nameText: {
-        color: '#fff',
+        color: 'black',
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
         textShadowRadius: 3,
     },
     roleText: {
-        color: 'rgba(255, 255, 255, 0.8)',
+        color: 'black',
         fontSize: 16,
         marginTop: 5,
     },

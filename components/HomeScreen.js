@@ -7,12 +7,13 @@ import {
     TouchableOpacity,
     Dimensions,
     StyleSheet,
-    ImageBackground,
+    ImageBackground, Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome } from "@expo/vector-icons";
 import ApiCall from "../config/ApiCall";
 import { useFocusEffect } from "@react-navigation/native";
+import student from "./Student";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -21,11 +22,17 @@ const HomeScreen = ({ navigation }) => {
     const [attendance, setAttendance] = useState(false);
     const [showNomenklatura, setShowNomenklatura] = useState(false);
     const [rector, setRector] = useState(false);
+    const [profileData, setProfileData] = useState(null);
+
 
     useFocusEffect(
+
+
+
         useCallback(() => {
             const fetchData = async () => {
                 await fetchRole();
+                await fetchStudent()
                 await fetchProfileData();
                 const attendanceValue = await AsyncStorage.getItem("attendance");
                 setRector(attendanceValue === "true"); // Convert string to boolean
@@ -35,9 +42,24 @@ const HomeScreen = ({ navigation }) => {
         }, []) // Runs on every screen focus
     );
 
+
     const fetchRole = async () => {
         const storedRole = await AsyncStorage.getItem("role");
         setRole(storedRole || "");
+    };
+    const fetchStudent = async () => {
+        const role = await AsyncStorage.getItem("role");
+        const token = await AsyncStorage.getItem("token");
+        if (role === "ROLE_STUDENT") {
+            const response = await ApiCall("/api/v1/app/student/account/" + token, "GET");
+            if (response.status === 200 && response.data) {
+                setProfileData(response.data);
+            } else {
+                Alert.alert("Error", "Failed to fetch profile data.");
+                navigation.replace("Login");
+            }
+        }
+
     };
 
     const fetchProfileData = async () => {
@@ -203,27 +225,7 @@ const HomeScreen = ({ navigation }) => {
                 )}
 
                 {role === "ROLE_STUDENT" && (
-
                     <ScrollView style={styles.cardsContainer}>
-                        {role === "ROLE_STAFF" && (
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate("Topshiriq")} // Navigate to specific screen
-                            >
-                                <ImageBackground
-                                    source={require("../assets/bg21.jpg")} // Background image for each card
-                                    style={styles.card}
-                                    imageStyle={styles.cardBackgroundImage}
-                                >
-                                    <FontAwesome
-                                        name={"calendar"}
-                                        size={40}
-                                        color={"rgba(0,0,30,0.59)"}
-                                    />
-                                    <Text style={styles.cardText}>Topshiriqlar</Text>
-                                </ImageBackground>
-                            </TouchableOpacity>
-                        )}
-
                             <TouchableOpacity
                                 onPress={() => navigation.navigate("Student")} // Navigate to specific screen
                             >
@@ -245,7 +247,7 @@ const HomeScreen = ({ navigation }) => {
 
 
                             <TouchableOpacity
-                                onPress={() => navigation.navigate("Jadval")} // Navigate to specific screen
+                                onPress={() => navigation.navigate("HaftalikJadval", { groupId: profileData.group_id })}
                             >
                                 <ImageBackground
                                     source={require("../assets/bg21.jpg")} // Background image for each card
