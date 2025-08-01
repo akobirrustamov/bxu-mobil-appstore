@@ -23,6 +23,7 @@ const HomeScreen = ({ navigation }) => {
     const [showNomenklatura, setShowNomenklatura] = useState(false);
     const [rector, setRector] = useState(false);
     const [profileData, setProfileData] = useState(null);
+    console.log(role)
 
 
     useFocusEffect(

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Alert, ImageBackground, TouchableOpacity, Image, Animated, Easing } from "react-native";
+import React, {useEffect, useState} from "react";
+import {View, Text, StyleSheet, Alert, ImageBackground, TouchableOpacity, Image, Animated, Easing} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiCall from "../config/ApiCall";
-import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import {FontAwesome, MaterialIcons} from "@expo/vector-icons";
 import * as Animatable from 'react-native-animatable';
+import StaffProfile from "./StaffProfile";
 
-const Profile = ({ navigation }) => {
+const Profile = ({navigation}) => {
     const [profileData, setProfileData] = useState(null);
     const [administrator, setAdministrator] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -18,6 +19,7 @@ const Profile = ({ navigation }) => {
             try {
                 const token = await AsyncStorage.getItem("token");
                 const role = await AsyncStorage.getItem("role");
+                console.log(role)
                 if (!token || !role) {
                     navigation.replace("Login");
                     return;
@@ -95,7 +97,7 @@ const Profile = ({ navigation }) => {
                         styles.container,
                         {
                             opacity: fadeAnim,
-                            transform: [{ translateY: slideAnim }]
+                            transform: [{translateY: slideAnim}]
                         }
                     ]}
                 >
@@ -104,7 +106,7 @@ const Profile = ({ navigation }) => {
                             <View style={styles.header}>
                                 <Image
                                     style={styles.profileImage}
-                                    source={{ uri: profileData?.image || 'https://via.placeholder.com/150' }}
+                                    source={{uri: profileData?.image || 'https://via.placeholder.com/150'}}
                                 />
                                 <Text style={styles.nameText}>
                                     {profileData?.second_name} {profileData?.first_name}
@@ -126,52 +128,67 @@ const Profile = ({ navigation }) => {
                             {/*</TouchableOpacity>*/}
 
 
-                                <Animatable.View
-                                    animation="fadeInUp"
-                                    duration={500}
-                                    style={styles.detailsBox}
-                                >
-                                    <View style={styles.detailRow}>
-                                        <MaterialIcons name="location-on" size={18} color="#4CAF50" />
-                                        <Text style={styles.detailItem}><Text style={styles.label}>Manzil:</Text> {profileData.address || 'Mavjud emas'}</Text>
-                                    </View>
-                                    <View style={styles.detailRow}>
-                                        <MaterialIcons name="person" size={18} color="#4CAF50" />
-                                        <Text style={styles.detailItem}><Text style={styles.label}>Jinsi:</Text> {profileData.gender || 'Mavjud emas'}</Text>
-                                    </View>
-                                    <View style={styles.detailRow}>
-                                        <MaterialIcons name="phone" size={18} color="#4CAF50" />
-                                        <Text style={styles.detailItem}><Text style={styles.label}>Telefon:</Text> {profileData.phone || 'Mavjud emas'}</Text>
-                                    </View>
-                                    <View style={styles.detailRow}>
-                                        <MaterialIcons name="school" size={18} color="#4CAF50" />
-                                        <Text style={styles.detailItem}><Text style={styles.label}>Fakultet:</Text> {profileData.faculty || 'Mavjud emas'}</Text>
-                                    </View>
-                                    <View style={styles.detailRow}>
-                                        <MaterialIcons name="class" size={18} color="#4CAF50" />
-                                        <Text style={styles.detailItem}><Text style={styles.label}>Yo'nalish:</Text> {profileData.specialty || 'Mavjud emas'}</Text>
-                                    </View>
-                                    <View style={styles.detailRow}>
-                                        <MaterialIcons name="book" size={18} color="#4CAF50" />
-                                        <Text style={styles.detailItem}><Text style={styles.label}>Kurs:</Text> {profileData.level || 'Mavjud emas'}</Text>
-                                    </View>
-                                    <View style={styles.detailRow}>
-                                        <MaterialIcons name="group" size={18} color="#4CAF50" />
-                                        <Text style={styles.detailItem}><Text style={styles.label}>Guruh:</Text> {profileData.group_name || 'Mavjud emas'}</Text>
-                                    </View>
-                                    <View style={styles.detailRow}>
-                                        <MaterialIcons name="payment" size={18} color="#4CAF50" />
-                                        <Text style={styles.detailItem}><Text style={styles.label}>To'lov turi:</Text> {profileData.paymentForm || 'Mavjud emas'}</Text>
-                                    </View>
-                                    <View style={styles.detailRow}>
-                                        <MaterialIcons name="school" size={18} color="#4CAF50" />
-                                        <Text style={styles.detailItem}><Text style={styles.label}>Ta'lim shakli:</Text> {profileData.educationForm || 'Mavjud emas'}</Text>
-                                    </View>
-                                    <View style={styles.detailRow}>
-                                        <MaterialIcons name="info" size={18} color="#4CAF50" />
-                                        <Text style={styles.detailItem}><Text style={styles.label}>Status:</Text> {profileData.studentStatus || 'Mavjud emas'}</Text>
-                                    </View>
-                                </Animatable.View>
+                            <Animatable.View
+                                animation="fadeInUp"
+                                duration={500}
+                                style={styles.detailsBox}
+                            >
+                                <View style={styles.detailRow}>
+                                    <MaterialIcons name="location-on" size={18} color="#4CAF50"/>
+                                    <Text style={styles.detailItem}><Text
+                                        style={styles.label}>Manzil:</Text> {profileData.address || 'Mavjud emas'}
+                                    </Text>
+                                </View>
+                                <View style={styles.detailRow}>
+                                    <MaterialIcons name="person" size={18} color="#4CAF50"/>
+                                    <Text style={styles.detailItem}><Text
+                                        style={styles.label}>Jinsi:</Text> {profileData.gender || 'Mavjud emas'}</Text>
+                                </View>
+                                <View style={styles.detailRow}>
+                                    <MaterialIcons name="phone" size={18} color="#4CAF50"/>
+                                    <Text style={styles.detailItem}><Text
+                                        style={styles.label}>Telefon:</Text> {profileData.phone || 'Mavjud emas'}</Text>
+                                </View>
+                                <View style={styles.detailRow}>
+                                    <MaterialIcons name="school" size={18} color="#4CAF50"/>
+                                    <Text style={styles.detailItem}><Text
+                                        style={styles.label}>Fakultet:</Text> {profileData.faculty || 'Mavjud emas'}
+                                    </Text>
+                                </View>
+                                <View style={styles.detailRow}>
+                                    <MaterialIcons name="class" size={18} color="#4CAF50"/>
+                                    <Text style={styles.detailItem}><Text
+                                        style={styles.label}>Yo'nalish:</Text> {profileData.specialty || 'Mavjud emas'}
+                                    </Text>
+                                </View>
+                                <View style={styles.detailRow}>
+                                    <MaterialIcons name="book" size={18} color="#4CAF50"/>
+                                    <Text style={styles.detailItem}><Text
+                                        style={styles.label}>Kurs:</Text> {profileData.level || 'Mavjud emas'}</Text>
+                                </View>
+                                <View style={styles.detailRow}>
+                                    <MaterialIcons name="group" size={18} color="#4CAF50"/>
+                                    <Text style={styles.detailItem}><Text
+                                        style={styles.label}>Guruh:</Text> {profileData.group_name || 'Mavjud emas'}
+                                    </Text>
+                                </View>
+                                <View style={styles.detailRow}>
+                                    <MaterialIcons name="payment" size={18} color="#4CAF50"/>
+                                    <Text style={styles.detailItem}><Text style={styles.label}>To'lov
+                                        turi:</Text> {profileData.paymentForm || 'Mavjud emas'}</Text>
+                                </View>
+                                <View style={styles.detailRow}>
+                                    <MaterialIcons name="school" size={18} color="#4CAF50"/>
+                                    <Text style={styles.detailItem}><Text style={styles.label}>Ta'lim
+                                        shakli:</Text> {profileData.educationForm || 'Mavjud emas'}</Text>
+                                </View>
+                                <View style={styles.detailRow}>
+                                    <MaterialIcons name="info" size={18} color="#4CAF50"/>
+                                    <Text style={styles.detailItem}><Text
+                                        style={styles.label}>Status:</Text> {profileData.studentStatus || 'Mavjud emas'}
+                                    </Text>
+                                </View>
+                            </Animatable.View>
 
 
                             <TouchableOpacity
@@ -179,7 +196,7 @@ const Profile = ({ navigation }) => {
                                 onPress={handleLogout}
                                 activeOpacity={0.7}
                             >
-                                <FontAwesome name="sign-out" size={18} color="#fff" />
+                                <FontAwesome name="sign-out" size={18} color="#fff"/>
                                 <Text style={styles.logoutButtonText}>Log Out</Text>
                             </TouchableOpacity>
                         </View>
@@ -206,7 +223,7 @@ const Profile = ({ navigation }) => {
                                 onPress={() => navigation.navigate("EditProfile")}
                                 activeOpacity={0.7}
                             >
-                                <MaterialIcons name="edit" size={18} color="#fff" />
+                                <MaterialIcons name="edit" size={18} color="#fff"/>
                                 <Text style={styles.buttonText}>Edit Profile</Text>
                             </TouchableOpacity>
 
@@ -215,7 +232,7 @@ const Profile = ({ navigation }) => {
                                 onPress={handleLogout}
                                 activeOpacity={0.7}
                             >
-                                <FontAwesome name="sign-out" size={18} color="#fff" />
+                                <FontAwesome name="sign-out" size={18} color="#fff"/>
                                 <Text style={styles.logoutButtonText}>Log Out</Text>
                             </TouchableOpacity>
                         </View>
@@ -284,7 +301,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         textShadowColor: 'rgba(0, 0, 0, 0.3)',
-        textShadowOffset: { width: 1, height: 1 },
+        textShadowOffset: {width: 1, height: 1},
         textShadowRadius: 3,
     },
     roleText: {
@@ -301,7 +318,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         shadowColor: '#4CAF50',
-        shadowOffset: { width: 0, height: 4 },
+        shadowOffset: {width: 0, height: 4},
         shadowOpacity: 0.3,
         shadowRadius: 5,
     },
@@ -343,7 +360,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         shadowColor: '#E74C3C',
-        shadowOffset: { width: 0, height: 4 },
+        shadowOffset: {width: 0, height: 4},
         shadowOpacity: 0.3,
         shadowRadius: 5,
     },
